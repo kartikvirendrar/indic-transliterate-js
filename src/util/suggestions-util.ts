@@ -1,4 +1,5 @@
 import { Language } from "../types/Language";
+import { BASE_URL } from "../constants/Urls";
 
 type Config = {
   numOptions?: number;
@@ -9,7 +10,7 @@ type Config = {
 export const getTransliterateSuggestions = async (
   word: string,
   config?: Config,
-): Promise<string[]> => {
+): Promise<string[] | undefined> => {
   const { numOptions, showCurrentWordAsLastSuggestion, lang } = config || {
     numOptions: 5,
     showCurrentWordAsLastSuggestion: true,
@@ -17,15 +18,23 @@ export const getTransliterateSuggestions = async (
   };
   // fetch suggestion from api
   // const url = `https://www.google.com/inputtools/request?ime=transliteration_en_${lang}&num=5&cp=0&cs=0&ie=utf-8&oe=utf-8&app=jsapi&text=${word}`;
+  
+  var myHeaders = new Headers();
+  
+  myHeaders.append("Content-Type", "application/json");
 
-  const url = `https://inputtools.google.com/request?text=${word}&itc=${lang}-t-i0-und&num=${numOptions}&cp=0&cs=1&ie=utf-8&oe=utf-8&app=demopage`;
+  const requestOptions = {
+    method: 'GET',
+  };
+
   try {
-    const res = await fetch(url);
+    const res = await fetch(BASE_URL+`tl/${lang}/${word}`,requestOptions);
     const data = await res.json();
-    if (data && data[0] === "SUCCESS") {
+    // console.log("library data", data);
+    if (data && data.result.length > 0) {
       const found = showCurrentWordAsLastSuggestion
-        ? [...data[1][0][1], word]
-        : data[1][0][1];
+        ? [...data.result, word]
+        :data.result;
       return found;
     } else {
       if (showCurrentWordAsLastSuggestion) {

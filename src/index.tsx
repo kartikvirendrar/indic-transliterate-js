@@ -5,8 +5,10 @@ import getCaretCoordinates from "textarea-caret";
 import classes from "./styles.module.css";
 import { ReactTransliterateProps } from "./interfaces/Props";
 import { Language } from "./types/Language";
+import { LangObject } from "./types/LangObject";
 import { TriggerKeys } from "./constants/TriggerKeys";
 import { getTransliterateSuggestions } from "./util/suggestions-util";
+import { getTransliterationLanguages } from "./util/getTransliterationLanguages"
 
 const KEY_UP = "ArrowUp";
 const KEY_DOWN = "ArrowDown";
@@ -113,6 +115,11 @@ export const ReactTransliterate = ({
     });
     setOptions(data);
   };
+
+  const getDirection = async (lang: Language) => {
+    const langList = await getTransliterationLanguages();
+    return langList?.filter((language: LangObject) => language["LangCode"] === lang)["Direction"] ?? "ltr"
+  }
 
   const handleChange = (e: React.FormEvent<HTMLInputElement>) => {
     const value = e.currentTarget.value;
@@ -255,6 +262,7 @@ export const ReactTransliterate = ({
         ref: inputRef,
         value: value,
         "data-testid": "rt-input-component",
+        style: {'direction': getDirection(lang)},
         ...rest,
       })}
       {shouldRenderSuggestions && options.length > 0 && (
@@ -293,3 +301,4 @@ export const ReactTransliterate = ({
 
 export type { ReactTransliterateProps, Language };
 export { TriggerKeys, getTransliterateSuggestions };
+export { getTransliterationLanguages };
