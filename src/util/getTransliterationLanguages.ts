@@ -12,6 +12,7 @@ export const getTransliterationLanguages = async(): Promise<LangObject[] | undef
     };
   
     try {
+    //  console.log("try ");
       const res = await fetch(apiURL,requestOptions);
       const data = await res.json();
       // console.log("library data", data);
