@@ -1,11 +1,11 @@
-import { Language } from "./Language"
+import { Language } from "./Language";
 
 export type LangObject = {
-    "Author": String,
-    "CompiledDate": String,
-    "Direction": | "ltr" | "rtl",
-    "DisplayName": String,
-    "Identifier": Language,
-    "IsStable": Boolean,
-    "LangCode": Language
-}
+  Author: string;
+  CompiledDate: string;
+  Direction: "ltr" | "rtl";
+  DisplayName: string;
+  Identifier: Language;
+  IsStable: boolean;
+  LangCode: Language;
+};
