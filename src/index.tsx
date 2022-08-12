@@ -17,7 +17,7 @@ const KEY_ESCAPE = "Escape";
 const OPTION_LIST_Y_OFFSET = 10;
 const OPTION_LIST_MIN_WIDTH = 100;
 
-export const ReactTransliterate = ({
+export const IndicTransliterate = ({
   renderComponent = (props) => <input {...props} />,
   lang = "hi",
   offsetX = 0,

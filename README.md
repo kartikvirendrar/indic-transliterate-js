@@ -1,6 +1,6 @@
-<h1 align="center">React Transliterate</h1>
+<h1 align="center">Indic Transliterate</h1>
 
-Transliteration component for React with support for over 30 languages. Uses API from [Google Input Tools](https://www.google.com/inputtools)
+Transliteration component for React with support for over 30 languages. Uses API from [AI4Bharat Indic NLP](https://indicnlp.ai4bharat.org/home/)
 
 [![NPM](https://img.shields.io/npm/v/react-transliterate.svg)](https://www.npmjs.com/package/react-transliterate)
 
@@ -8,18 +8,18 @@ Transliteration component for React with support for over 30 languages. Uses API
 <img src="./assets/hi.gif"></img>
 </p>
 
-## Demo
+<!-- ## Demo
 
-[See Demo](https://burhanuday.github.io/react-transliterate/)
+[See Demo](https://burhanuday.github.io/react-transliterate/) -->
 
 ## Install
 
 ```bash
-npm install --save react-transliterate
+npm install --save indic-transliterate
 
 OR
 
-yarn add react-transliterate
+yarn add indic-transliterate
 ```
 
 ## Usage
@@ -29,14 +29,14 @@ yarn add react-transliterate
 ```jsx
 import React, { useState } from "react";
 
-import { ReactTransliterate } from "react-transliterate";
-import "react-transliterate/dist/index.css";
+import { IndicTransliterate } from "indic-transliterate";
+import "indic-transliterate/dist/index.css";
 
 const App = () => {
   const [text, setText] = useState("");
 
   return (
-    <ReactTransliterate
+    <IndicTransliterate
       value={text}
       onChangeText={(text) => {
         setText(text);
@@ -54,14 +54,14 @@ export default App;
 ```jsx
 import React, { useState } from "react";
 
-import { ReactTransliterate } from "react-transliterate";
-import "react-transliterate/dist/index.css";
+import { IndicTransliterate } from "indic-transliterate";
+import "indic-transliterate/dist/index.css";
 
 const App = () => {
   const [text, setText] = useState("");
 
   return (
-    <ReactTransliterate
+    <IndicTransliterate
       renderComponent={(props) => <textarea {...props} />}
       value={text}
       onChangeText={(text) => {
@@ -80,15 +80,15 @@ export default App;
 ```tsx
 import React, { useState } from "react";
 
-import { ReactTransliterate, Language } from "react-transliterate";
-import "react-transliterate/dist/index.css";
+import { IndicTransliterate, Language } from "indic-transliterate";
+import "indic-transliterate/dist/index.css";
 
 const App = () => {
   const [text, setText] = useState("");
   const [lang, setLang] = useState<Language>("hi");
 
   return (
-    <ReactTransliterate
+    <IndicTransliterate
       renderComponent={(props) => <textarea {...props} />}
       value={text}
       onChangeText={(text) => {
@@ -107,8 +107,8 @@ export default App;
 ```tsx
 import React, { useState } from "react";
 
-import { ReactTransliterate, Language } from "react-transliterate";
-import "react-transliterate/dist/index.css";
+import { IndicTransliterate, Language } from "indic-transliterate";
+import "indic-transliterate/dist/index.css";
 
 import Input from "@material-ui/core/Input";
 
@@ -117,7 +117,7 @@ const App = () => {
   const [lang, setLang] = useState<Language>("hi");
 
   return (
-    <ReactTransliterate
+    <IndicTransliterate
       renderComponent={(props) => {
         const inputRef = props.ref;
         delete props["ref"];
@@ -139,13 +139,13 @@ export default App;
 
 Keys which when pressed, input the current selection to the textbox
 
-React Transliterate uses the `event.keycode` property to detect keys. Here are some predefined keys you can use. Or, you can enter the integer codes for any other key you'd like to use as the trigger
+Indic Transliterate uses the `event.keycode` property to detect keys. Here are some predefined keys you can use. Or, you can enter the integer codes for any other key you'd like to use as the trigger
 
 ```jsx
 import React, { useState } from "react";
 
-import { ReactTransliterate, TriggerKeys } from "react-transliterate";
-import "react-transliterate/dist/index.css";
+import { IndicTransliterate, TriggerKeys } from "indic-transliterate";
+import "indic-transliterate/dist/index.css";
 
 import Input from "@material-ui/core/Input";
 
@@ -153,7 +153,7 @@ const App = () => {
   const [text, setText] = useState("");
 
   return (
-    <ReactTransliterate
+    <IndicTransliterate
       value={text}
       onChangeText={(text) => {
         setText(text);
@@ -175,7 +175,7 @@ export default App;
 ## Get transliteration suggestions
 
 ```jsx
-import { getTransliterateSuggestions } from "react-transliterate";
+import { getTransliterateSuggestions } from "indic-transliterate";
 
 const data = await getTransliterateSuggestions(
   word, // word to fetch suggestions for
@@ -185,6 +185,14 @@ const data = await getTransliterateSuggestions(
     lang: "hi", // target language
   },
 );
+```
+
+## Get supported languages
+
+```jsx
+import { getTransliterateLanguages } from "indic-transliterate";
+
+const data = await getTransliterateLanguages();
 ```
 
 For a full example, take a look at the `example` folder
@@ -210,46 +218,6 @@ For a full example, take a look at the `example` folder
 | insertCurrentSelectionOnBlur     |           | `true`                                      | Should the current selection be inserted when `blur` event occurs                                                                    |
 | showCurrentWordAsLastSuggestion  |           | `true`                                      | Show current input as the last option in the suggestion box                                                                          |
 
-### Supported Languages
-
-| Language              | Code     |
-| --------------------- | -------- |
-| Amharic               | am       |
-| Arabic                | ar       |
-| Bangla                | bn       |
-| Belarusian            | be       |
-| Bulgarian             | bg       |
-| Chinese (Hong Kong)   | yue-hant |
-| Chinese (Simplified)  | zh       |
-| Chinese (Traditional) | zh-hant  |
-| French                | fr       |
-| German                | de       |
-| Greek                 | el       |
-| Gujarati              | gu       |
-| Hebrew                | he       |
-| Hindi                 | hi       |
-| Italian               | it       |
-| Japanese              | ja       |
-| Kannada               | kn       |
-| Malayalam             | ml       |
-| Marathi               | mr       |
-| Nepali                | ne       |
-| Odia                  | or       |
-| Persian               | fa       |
-| Portuguese (Brazil)   | pt       |
-| Punjabi               | pa       |
-| Russian               | ru       |
-| Sanskrit              | sa       |
-| Serbian               | sr       |
-| Sinhala               | si       |
-| Spanish               | es       |
-| Tamil                 | ta       |
-| Telugu                | te       |
-| Tigrinya              | ti       |
-| Ukrainian             | uk       |
-| Urdu                  | ur       |
-| Vietnamese            | vi       |
-
 ## License
 
-MIT © [burhanuday](https://github.com/burhanuday)
+MIT ©
