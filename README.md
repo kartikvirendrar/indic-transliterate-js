@@ -1,6 +1,6 @@
 <h1 align="center">Indic Transliterate</h1>
 
-Transliteration component for React with support for over 30 languages. Uses API from [AI4Bharat Indic NLP](https://indicnlp.ai4bharat.org/home/)
+Transliteration component for React with support for 21 languages. Uses API from [AI4Bharat Indic NLP](https://indicnlp.ai4bharat.org/home/)
 
 [![NPM](https://img.shields.io/npm/v/react-transliterate.svg)](https://www.npmjs.com/package/react-transliterate)
 
