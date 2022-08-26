@@ -1,6 +1,6 @@
 import { Language } from "../types/Language";
 
-export interface ReactTransliterateProps
+export interface IndicTransliterateProps
   extends React.HTMLProps<HTMLInputElement | HTMLTextAreaElement> {
   /**
    * Component to render. You can pass components from your

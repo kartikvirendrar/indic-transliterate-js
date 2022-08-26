@@ -3,10 +3,12 @@ import { useEffect, useRef, useState, useMemo } from "react";
 import { setCaretPosition, getInputSelection, isTouchEnabled } from "./util";
 import getCaretCoordinates from "textarea-caret";
 import classes from "./styles.module.css";
-import { ReactTransliterateProps } from "./interfaces/Props";
+import { IndicTransliterateProps } from "./interfaces/Props";
 import { Language } from "./types/Language";
+import { LangObject } from "./types/LangObject";
 import { TriggerKeys } from "./constants/TriggerKeys";
 import { getTransliterateSuggestions } from "./util/suggestions-util";
+import { getTransliterationLanguages } from "./util/getTransliterationLanguages";
 
 const KEY_UP = "ArrowUp";
 const KEY_DOWN = "ArrowDown";
@@ -15,7 +17,7 @@ const KEY_ESCAPE = "Escape";
 const OPTION_LIST_Y_OFFSET = 10;
 const OPTION_LIST_MIN_WIDTH = 100;
 
-export const ReactTransliterate = ({
+export const IndicTransliterate = ({
   renderComponent = (props) => <input {...props} />,
   lang = "hi",
   offsetX = 0,
@@ -41,7 +43,7 @@ export const ReactTransliterate = ({
   showCurrentWordAsLastSuggestion = true,
   enabled = true,
   ...rest
-}: ReactTransliterateProps): JSX.Element => {
+}: IndicTransliterateProps): JSX.Element => {
   const [options, setOptions] = useState<string[]>([]);
   const [left, setLeft] = useState(0);
   const [top, setTop] = useState(0);
@@ -111,7 +113,16 @@ export const ReactTransliterate = ({
       showCurrentWordAsLastSuggestion,
       lang,
     });
-    setOptions(data);
+    setOptions(data ?? []);
+  };
+
+  const getDirection = async (lang: Language) => {
+    const langList = await getTransliterationLanguages();
+    return (
+      langList?.filter((language: LangObject) => language.LangCode === lang)[
+        "Direction"
+      ] ?? "ltr"
+    );
   };
 
   const handleChange = (e: React.FormEvent<HTMLInputElement>) => {
@@ -255,6 +266,7 @@ export const ReactTransliterate = ({
         ref: inputRef,
         value: value,
         "data-testid": "rt-input-component",
+        style: { direction: getDirection(lang) },
         ...rest,
       })}
       {shouldRenderSuggestions && options.length > 0 && (
@@ -291,5 +303,6 @@ export const ReactTransliterate = ({
   );
 };
 
-export type { ReactTransliterateProps, Language };
+export type { IndicTransliterateProps, Language };
 export { TriggerKeys, getTransliterateSuggestions };
+export { getTransliterationLanguages };
