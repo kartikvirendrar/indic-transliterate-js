@@ -15,11 +15,11 @@ Transliteration component for React with support for 21 languages. Uses API from
 ## Install
 
 ```bash
-npm install --save indic-transliterate
+npm install --save @ai4bharat/indic-transliterate
 
 OR
 
-yarn add indic-transliterate
+yarn add @ai4bharat/indic-transliterate
 ```
 
 ## Usage
@@ -29,8 +29,8 @@ yarn add indic-transliterate
 ```jsx
 import React, { useState } from "react";
 
-import { IndicTransliterate } from "indic-transliterate";
-import "indic-transliterate/dist/index.css";
+import { IndicTransliterate } from "@ai4bharat/indic-transliterate";
+import "@ai4bharat/indic-transliterate/dist/index.css";
 
 const App = () => {
   const [text, setText] = useState("");
@@ -54,8 +54,8 @@ export default App;
 ```jsx
 import React, { useState } from "react";
 
-import { IndicTransliterate } from "indic-transliterate";
-import "indic-transliterate/dist/index.css";
+import { IndicTransliterate } from "@ai4bharat/indic-transliterate";
+import "@ai4bharat/indic-transliterate/dist/index.css";
 
 const App = () => {
   const [text, setText] = useState("");
@@ -80,8 +80,8 @@ export default App;
 ```tsx
 import React, { useState } from "react";
 
-import { IndicTransliterate, Language } from "indic-transliterate";
-import "indic-transliterate/dist/index.css";
+import { IndicTransliterate, Language } from "@ai4bharat/indic-transliterate";
+import "@ai4bharat/indic-transliterate/dist/index.css";
 
 const App = () => {
   const [text, setText] = useState("");
@@ -107,8 +107,8 @@ export default App;
 ```tsx
 import React, { useState } from "react";
 
-import { IndicTransliterate, Language } from "indic-transliterate";
-import "indic-transliterate/dist/index.css";
+import { IndicTransliterate, Language } from "@ai4bharat/indic-transliterate";
+import "@ai4bharat/indic-transliterate/dist/index.css";
 
 import Input from "@material-ui/core/Input";
 
@@ -144,8 +144,8 @@ Indic Transliterate uses the `event.keycode` property to detect keys. Here are s
 ```jsx
 import React, { useState } from "react";
 
-import { IndicTransliterate, TriggerKeys } from "indic-transliterate";
-import "indic-transliterate/dist/index.css";
+import { IndicTransliterate, TriggerKeys } from "@ai4bharat/indic-transliterate";
+import "@ai4bharat/indic-transliterate/dist/index.css";
 
 import Input from "@material-ui/core/Input";
 
@@ -175,7 +175,7 @@ export default App;
 ## Get transliteration suggestions
 
 ```jsx
-import { getTransliterateSuggestions } from "indic-transliterate";
+import { getTransliterateSuggestions } from "@ai4bharat/indic-transliterate";
 
 const data = await getTransliterateSuggestions(
   word, // word to fetch suggestions for
@@ -190,7 +190,7 @@ const data = await getTransliterateSuggestions(
 ## Get supported languages
 
 ```jsx
-import { getTransliterateLanguages } from "indic-transliterate";
+import { getTransliterateLanguages } from "@ai4bharat/indic-transliterate";
 
 const data = await getTransliterateLanguages();
 ```
