@@ -5,6 +5,7 @@
   "author": "AI4Bharat",
   "license": "MIT",
   "repository": "AI4Bharat/indic-transliterate-js",
+  "homepage": "https://ai4bharat.github.io/",
   "types": "dist/types.d.ts",
   "keywords": [
     "indic",
