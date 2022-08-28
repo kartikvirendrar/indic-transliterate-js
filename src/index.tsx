@@ -52,6 +52,7 @@ export const IndicTransliterate = ({
   const [matchEnd, setMatchEnd] = useState(-1);
   const inputRef = useRef<HTMLInputElement>(null);
   const [windowSize, setWindowSize] = useState({ width: 0, height: 0 });
+  const [direction, setDirection] = useState("ltr");
 
   const shouldRenderSuggestions = useMemo(
     () =>
@@ -243,6 +244,9 @@ export const IndicTransliterate = ({
     const width = window.innerWidth;
     const height = window.innerHeight;
     setWindowSize({ width, height });
+    getDirection(lang).then((direction) => {
+      setDirection(direction);
+    });
 
     return () => {
       window.removeEventListener("resize", handleResize);
@@ -266,7 +270,7 @@ export const IndicTransliterate = ({
         ref: inputRef,
         value: value,
         "data-testid": "rt-input-component",
-        style: { direction: getDirection(lang) },
+        style: { direction: direction },
         ...rest,
       })}
       {shouldRenderSuggestions && options.length > 0 && (
