@@ -26,7 +26,10 @@ export const getTransliterateSuggestions = async (
   };
 
   try {
-    const res = await fetch(BASE_URL + `tl/${lang}/${word}`, requestOptions);
+    const res = await fetch(
+      BASE_URL + `tl/${lang}/${encodeURI(word)}`,
+      requestOptions,
+    );
     const data = await res.json();
     // console.log("library data", data);
     if (data && data.result.length > 0) {
