@@ -68,7 +68,7 @@ export const IndicTransliterate = ({
     setOptions([]);
   };
 
-  const handleSelection = (index: number) => {
+  const handleSelection = (index: number, triggerKey = " ") => {
     const currentString = value;
     // create a new string with the currently typed word
     // replaced with the word in transliterated language
@@ -84,7 +84,9 @@ export const IndicTransliterate = ({
       setCaretPosition(
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         inputRef.current!,
-        matchStart + options[index].length + 1,
+        triggerKey === "Enter"
+          ? matchStart + options[index].length
+          : matchStart + options[index].length + 1,
       );
     }, 1);
 
@@ -193,7 +195,7 @@ export const IndicTransliterate = ({
     if (helperVisible) {
       if (triggerKeys.includes(event.key)) {
         event.preventDefault();
-        handleSelection(selection);
+        handleSelection(selection, event.key);
       } else {
         switch (event.key) {
           case KEY_ESCAPE:
