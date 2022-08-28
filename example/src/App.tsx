@@ -1,32 +1,34 @@
-import React, { useState } from "react";
-
-// language list for example only
-import { languages } from "./languages";
+import React, { useState, useEffect } from "react";
 
 // import component
-import { ReactTransliterate, Language } from "react-transliterate";
-import "react-transliterate/dist/index.css";
+import { IndicTransliterate, getTransliterationLanguages } from "@ai4bharat/indic-transliterate";
+import "@ai4bharat/indic-transliterate/dist/index.css";
 
 // Material Ui input component
 import Input from "@material-ui/core/Input";
+import { LangObject } from "../../dist/types";
 
 const App = () => {
   const [text, setText] = useState("");
+  const [languages, setLanguages] = useState<LangObject[]|undefined>();
+  const [lang, setLang] = useState("hi");
 
-  const [lang, setLang] = useState<Language>("hi");
+  useEffect(() => {
+    getTransliterationLanguages().then(langs => setLanguages(langs));
+  }, [])
 
   return (
     <div className="container">
-      <h2>React transliterate</h2>
+      <h2>Indic transliterate</h2>
 
       <select
         className="language-dropdown"
         value={lang}
-        onChange={(e) => setLang(e.target.value as Language)}
+        onChange={(e) => setLang(e.target.value)}
       >
-        {languages.map((l) => (
-          <option key={l.value} value={l.value}>
-            {l.label}
+        {languages?.map((l) => (
+          <option key={l.LangCode} value={l.LangCode}>
+            {l.DisplayName}
           </option>
         ))}
       </select>
@@ -34,7 +36,7 @@ const App = () => {
       <div className="spacer" />
 
       <label htmlFor="react-transliterate-input">Using input</label>
-      <ReactTransliterate
+      <IndicTransliterate
         value={text}
         onChangeText={(text) => {
           setText(text);
@@ -47,7 +49,7 @@ const App = () => {
       <div className="spacer" />
 
       <label htmlFor="react-transliterate-textarea">Using textarea</label>
-      <ReactTransliterate
+      <IndicTransliterate
         renderComponent={(props) => <textarea {...props} />}
         value={text}
         onChangeText={(text) => {
@@ -63,7 +65,7 @@ const App = () => {
       <label htmlFor="react-transliterate-material-ui-input">
         Using Material UI input
       </label>
-      <ReactTransliterate
+      <IndicTransliterate
         renderComponent={(props) => {
           const inputRef = props.ref;
 
