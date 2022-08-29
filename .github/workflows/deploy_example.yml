@@ -7,20 +7,20 @@ jobs:
     build-and-deploy:
         concurrency: ci-${{ github.ref }}
         runs-on: ubuntu-latest
-        defaults:
-            run:
-                working-directory: example
         steps:
             - name: Checkout 🛎️
               uses: actions/checkout@v3
             - uses: actions/setup-node@v3
               with:
                 node-version: 14
-
+            - name: Install base packages 🔧
+              run: |
+                  npm ci
             - name: Install and Build 🔧
               run: |
-                  yarn install
-                  yarn start
+                  yarn install --modules-folder ../node_modules
+                  yarn build
+              working-directory: example
               env:
                   CI: false
 
@@ -28,4 +28,4 @@ jobs:
               uses: JamesIves/github-pages-deploy-action@v4.2.5
               with:
                   branch: gh-pages
-                  folder: build
+                  folder: example/build
