@@ -121,6 +121,10 @@ export const IndicTransliterate = ({
 
   const getDirection = async (lang: Language) => {
     const langList = await getTransliterationLanguages();
+    const temp = langList?.find(
+      (language: LangObject) => language.LangCode === lang,
+    );
+    console.log(temp, temp?.Direction, "direction");
     return (
       langList?.find((language: LangObject) => language.LangCode === lang)
         ?.Direction ?? "ltr"
@@ -246,6 +250,7 @@ export const IndicTransliterate = ({
     const height = window.innerHeight;
     setWindowSize({ width, height });
     getDirection(lang).then((direction) => {
+      console.log(direction, "direction");
       setDirection(direction);
     });
 
