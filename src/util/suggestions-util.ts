@@ -27,7 +27,12 @@ export const getTransliterateSuggestions = async (
 
   try {
     const res = await fetch(
-      BASE_URL + `tl/${lang}/${encodeURIComponent(word).replace(".", "%2E")}`,
+      BASE_URL +
+        `tl/${lang}/${
+          word === "." || word === ".."
+            ? " " + word.replace(".", "%2E")
+            : encodeURIComponent(word).replace(".", "%2E")
+        }`,
       requestOptions,
     );
     const data = await res.json();
