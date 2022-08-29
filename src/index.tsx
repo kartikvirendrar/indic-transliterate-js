@@ -255,6 +255,8 @@ export const IndicTransliterate = ({
     };
   }, []);
 
+  console.log("direction", direction);
+
   return (
     <div
       // position relative is required to show the component
