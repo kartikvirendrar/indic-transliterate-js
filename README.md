@@ -33,7 +33,7 @@ Transliteration component for React with support for 21 Indic languages. Uses AP
 
 ## 1. About
 
-This is a frontend library to enable your users to type in many different languages of South Asia, and can be integrated into any React-based application. This library is a fork of [react-transliterate](https://www.npmjs.com/package/react-transliterate), which uses Google Transliterate API which supports around 40 languages across the globe. In this module, our focus is to provide high-quality transliteration-suggestions for Indic languages, especially for low-resource languages like Kashmiri, Manipuri, etc. (which are not supported by Google).
+This is a frontend library to enable your users to type in many different languages of South Asia, and can be integrated into any React-based application. This library is a fork of [react-transliterate](https://www.npmjs.com/package/react-transliterate), which uses Google Transliterate API which supports around 40 languages across the globe. In this module, our focus is to provide high-quality transliteration-suggestions for Indic languages, especially for low-resource languages like Kashmiri, Manipuri, etc. (which are not supported by Google). For more details about the AI system behind this, please check [AI4Bhārat Indic-Xlit](https://ai4bharat.org/indic-xlit).
 
 ## 2. Demo
 
