@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@ai4bharat/indic-transliterate@^1.2.7":
-  version "1.2.7"
-  resolved "https://registry.yarnpkg.com/@ai4bharat/indic-transliterate/-/indic-transliterate-1.2.7.tgz#709d4762b5c532b1658556885c5126f3b45d5658"
-  integrity sha512-cONKcZds1QT7gEzAzpOEACNd9pUjvPbReW1sGO5UpV16bDwrAlUllydBE3wrsEz45Ow+1PhIohq2prp/KRCxTg==
+"@ai4bharat/indic-transliterate@^1.2.9":
+  version "1.2.9"
+  resolved "https://registry.yarnpkg.com/@ai4bharat/indic-transliterate/-/indic-transliterate-1.2.9.tgz#cc9f314265c2e6b02e81b4893013e24419f50259"
+  integrity sha512-YG982VG4Rib93WSc1/yAqxmDjdQhQaaToY82+FsXN4o8Se52HdXx3035qL0BEL5eRhWohTrqpay2rTsK0kwuyw==
   dependencies:
     textarea-caret "^3.1.0"
 
