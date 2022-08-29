@@ -18,7 +18,7 @@ jobs:
                   npm ci
             - name: Install and Build 🔧
               run: |
-                  yarn install --modules-folder ../node_modules
+                  yarn install
                   yarn build
               working-directory: example
               env:
