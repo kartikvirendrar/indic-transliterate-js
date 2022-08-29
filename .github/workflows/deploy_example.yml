@@ -19,8 +19,8 @@ jobs:
 
             - name: Install and Build 🔧
               run: |
-                  npm ci
-                  npm run build
+                  yarn install
+                  yarn start
               env:
                   CI: false
 
