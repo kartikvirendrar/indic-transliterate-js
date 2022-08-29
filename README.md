@@ -1,18 +1,47 @@
 <h1 align="center">Indic Transliterate</h1>
 
-Transliteration component for React with support for 21 languages. Uses API from [AI4Bharat Indic NLP](https://indicnlp.ai4bharat.org/home/)
+Transliteration component for React with support for 21 Indic languages. Uses API from [AI4Bharat IndicXlit](https://ai4bharat.org/transliteration).
 
-[![NPM](https://img.shields.io/npm/v/react-transliterate.svg)](https://www.npmjs.com/package/react-transliterate)
+[![NPM](https://img.shields.io/npm/v/@ai4bharat/indic-transliterate.svg)](https://www.npmjs.com/package/@ai4bharat/indic-transliterate)
 
 <p align="center">
 <img src="./assets/hi.gif"></img>
 </p>
 
-<!-- ## Demo
+## Table of contents
 
-[See Demo](https://burhanuday.github.io/react-transliterate/) -->
+<!-- TOC -->
 
-## Install
+- [1. About](#1-about)
+- [2. Demo](#2-demo)
+- [3. Install](#3-install)
+- [4. Usage](#4-usage)
+    - [4.1. Basic example](#41-basic-example)
+    - [4.2. With custom component](#42-with-custom-component)
+    - [4.3. With TypeScript](#43-with-typescript)
+    - [4.4. With Material-UI](#44-with-material-ui)
+- [5. Get transliteration suggestions](#5-get-transliteration-suggestions)
+    - [5.1. Standalone Example](#51-standalone-example)
+    - [5.2. Custom trigger keys](#52-custom-trigger-keys)
+    - [5.3. Props](#53-props)
+- [6. Languages](#6-languages)
+    - [6.1. Get supported languages](#61-get-supported-languages)
+    - [6.2. List of language codes](#62-list-of-language-codes)
+- [7. License](#7-license)
+
+<!-- /TOC -->
+
+## 1. About
+
+This is a frontend library to enable your users to type in many different languages of South Asia, and can be integrated into any React-based application. This library is a fork of [react-transliterate](https://www.npmjs.com/package/react-transliterate), which uses Google Transliterate API which supports around 40 languages across the globe. In this module, our focus is to provide high-quality transliteration-suggestions for Indic languages, especially for low-resource languages like Kashmiri, Manipuri, etc. (which are not supported by Google).
+
+## 2. Demo
+
+**[Click-here to try our demo!](https://ai4bharat.github.io/indic-transliterate-js/)**
+
+Source of this demo is available in the [`example` folder](https://github.com/AI4Bharat/indic-transliterate-js/tree/master/example) of the repo.
+
+## 3. Install
 
 ```bash
 npm install --save @ai4bharat/indic-transliterate
@@ -22,9 +51,9 @@ OR
 yarn add @ai4bharat/indic-transliterate
 ```
 
-## Usage
+## 4. Usage
 
-### Basic example
+### 4.1. Basic example
 
 ```jsx
 import React, { useState } from "react";
@@ -49,7 +78,7 @@ const App = () => {
 export default App;
 ```
 
-### With custom component
+### 4.2. With custom component
 
 ```jsx
 import React, { useState } from "react";
@@ -75,7 +104,7 @@ const App = () => {
 export default App;
 ```
 
-### Usage with TypeScript
+### 4.3. With TypeScript
 
 ```tsx
 import React, { useState } from "react";
@@ -102,7 +131,7 @@ const App = () => {
 export default App;
 ```
 
-### With material ui
+### 4.4. With Material-UI
 
 ```tsx
 import React, { useState } from "react";
@@ -135,7 +164,24 @@ const App = () => {
 export default App;
 ```
 
-### Custom trigger keys
+## 5. Get transliteration suggestions
+
+### 5.1. Standalone example
+
+```jsx
+import { getTransliterateSuggestions } from "@ai4bharat/indic-transliterate";
+
+const data = await getTransliterateSuggestions(
+  word, // word to fetch suggestions for
+  {
+    numOptions: 5, // number of suggestions to fetch
+    showCurrentWordAsLastSuggestion: true, // add the word as the last suggestion
+    lang: "hi", // target language
+  },
+);
+```
+
+### 5.2. Custom trigger keys
 
 Keys which when pressed, input the current selection to the textbox
 
@@ -172,32 +218,7 @@ const App = () => {
 export default App;
 ```
 
-## Get transliteration suggestions
-
-```jsx
-import { getTransliterateSuggestions } from "@ai4bharat/indic-transliterate";
-
-const data = await getTransliterateSuggestions(
-  word, // word to fetch suggestions for
-  {
-    numOptions: 5, // number of suggestions to fetch
-    showCurrentWordAsLastSuggestion: true, // add the word as the last suggestion
-    lang: "hi", // target language
-  },
-);
-```
-
-## Get supported languages
-
-```jsx
-import { getTransliterateLanguages } from "@ai4bharat/indic-transliterate";
-
-const data = await getTransliterateLanguages();
-```
-
-For a full example, take a look at the `example` folder
-
-### Props
+### 5.3. Props
 
 | Prop                             | Required? | Default                                     | Description                                                                                                                          |
 | -------------------------------- | --------- | ------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
@@ -218,6 +239,46 @@ For a full example, take a look at the `example` folder
 | insertCurrentSelectionOnBlur     |           | `true`                                      | Should the current selection be inserted when `blur` event occurs                                                                    |
 | showCurrentWordAsLastSuggestion  |           | `true`                                      | Show current input as the last option in the suggestion box                                                                          |
 
-## License
+## 6. Languages
 
-MIT ©
+### 6.1. Get supported languages
+
+```jsx
+import { getTransliterateLanguages } from "@ai4bharat/indic-transliterate";
+
+const data = await getTransliterateLanguages();
+```
+
+### 6.2. List of language codes
+
+Currently supports the following 21 languages from the Indian subcontinent:
+
+|ISO 639 code | Language |
+|---|--------------------|
+|as |Assamese - অসমীয়া   |
+|bn |Bangla - বাংলা       |
+|brx|Boro - बड़ो	      |
+|gu |Gujarati - ગુજરાતી   |
+|hi |Hindi - हिंदी         |
+|kn |Kannada - ಕನ್ನಡ     |
+|ks |Kashmiri - كٲشُر 	  |
+|gom|Konkani Goan - कोंकणी|
+|mai|Maithili - मैथिली     |
+|ml |Malayalam - മലയാളം|
+|mni|Manipuri - ꯃꯤꯇꯩꯂꯣꯟ	 |
+|mr |Marathi - मराठी       |
+|ne |Nepali - नेपाली 	    |
+|or |Oriya - ଓଡ଼ିଆ         |
+|pa |Panjabi - ਪੰਜਾਬੀ      |
+|sa |Sanskrit - संस्कृतम् 	 |
+|sd |Sindhi - سنڌي       |
+|si |Sinhala - සිංහල     |
+|ta |Tamil - தமிழ்       |
+|te |Telugu - తెలుగు      |
+|ur |Urdu - اُردُو         |
+
+## 7. License
+
+MIT © [ai4bharat](https://github.com/AI4Bharat) 
+
+Sincere thanks to [burhanuday](https://github.com/burhanuday/react-transliterate) for making his work open-source!
