@@ -10,7 +10,7 @@
     "eject": "node ../node_modules/react-scripts/bin/react-scripts.js eject"
   },
   "dependencies": {
-    "@ai4bharat/indic-transliterate": "^1.2.10",
+    "@ai4bharat/indic-transliterate": "link:..",
     "@material-ui/core": "^4.11.4",
     "@testing-library/jest-dom": "link:../node_modules/@testing-library/jest-dom",
     "@testing-library/react": "link:../node_modules/@testing-library/react",
@@ -22,7 +22,6 @@
     "react": "link:../node_modules/react",
     "react-dom": "link:../node_modules/react-dom",
     "react-scripts": "link:../node_modules/react-scripts",
-    "react-transliterate": "link:..",
     "typescript": "link:../node_modules/typescript"
   },
   "devDependencies": {
