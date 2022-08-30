@@ -19,7 +19,7 @@ jobs:
             - name: Install and Build 🔧
               run: |
                   yarn install
-                  yarn build
+                  npm run build
               working-directory: example
               env:
                   CI: false
