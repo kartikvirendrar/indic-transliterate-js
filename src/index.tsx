@@ -121,7 +121,6 @@ export const IndicTransliterate = ({
 
   const getDirection = async (lang: Language) => {
     const langList = await getTransliterationLanguages();
-    console.log( langList);
     return (
       langList?.find((language: LangObject) => language.LangCode === lang)
         ?.Direction ?? "ltr"
