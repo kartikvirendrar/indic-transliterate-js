@@ -244,9 +244,9 @@ export default App;
 ### 6.1. Get supported languages
 
 ```jsx
-import { getTransliterateLanguages } from "@ai4bharat/indic-transliterate";
+import { getTransliterationLanguages } from "@ai4bharat/indic-transliterate";
 
-const data = await getTransliterateLanguages();
+const data = await getTransliterationLanguages();
 ```
 
 ### 6.2. List of language codes
