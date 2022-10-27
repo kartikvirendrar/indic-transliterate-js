@@ -8,4 +8,6 @@ export type LangObject = {
   Identifier: Language;
   IsStable: boolean;
   LangCode: Language;
+  GoogleFont: string;
+  FallbackFont: string;
 };

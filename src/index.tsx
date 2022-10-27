@@ -53,6 +53,7 @@ export const IndicTransliterate = ({
   const inputRef = useRef<HTMLInputElement>(null);
   const [windowSize, setWindowSize] = useState({ width: 0, height: 0 });
   const [direction, setDirection] = useState("ltr");
+  const [googleFont, setGoogleFont] = useState<string | null>(null);
 
   const shouldRenderSuggestions = useMemo(
     () =>
@@ -119,12 +120,14 @@ export const IndicTransliterate = ({
     setOptions(data ?? []);
   };
 
-  const getDirection = async (lang: Language) => {
+  const getDirectionAndFont = async (lang: Language) => {
     const langList = await getTransliterationLanguages();
-    return (
-      langList?.find((language: LangObject) => language.LangCode === lang)
-        ?.Direction ?? "ltr"
-    );
+    const langObj = langList?.find((l) => l.LangCode === lang) as LangObject;
+    return [
+      langObj?.Direction ?? "ltr",
+      langObj?.GoogleFont,
+      langObj?.FallbackFont,
+    ];
   };
 
   const handleChange = (e: React.FormEvent<HTMLInputElement>) => {
@@ -252,8 +255,17 @@ export const IndicTransliterate = ({
   }, []);
 
   useEffect(() => {
-    getDirection(lang).then((direction) => {
+    getDirectionAndFont(lang).then(([direction, googleFont, fallbackFont]) => {
       setDirection(direction);
+      // import google font if not already imported
+      if (googleFont && !document.getElementById(`font-${googleFont}`)) {
+        const link = document.createElement("link");
+        link.id = `font-${googleFont}`;
+        link.href = `https://fonts.googleapis.com/css?family=${googleFont}`;
+        link.rel = "stylesheet";
+        document.head.appendChild(link);
+        setGoogleFont(`${googleFont}, ${fallbackFont ?? "sans-serif"}`);
+      }
     });
   }, [lang]);
 
@@ -274,7 +286,11 @@ export const IndicTransliterate = ({
         ref: inputRef,
         value: value,
         "data-testid": "rt-input-component",
-        style: { direction: direction },
+        lang: lang,
+        style: {
+          direction: direction,
+          ...(googleFont && { fontFamily: googleFont }),
+        },
         ...rest,
       })}
       {shouldRenderSuggestions && options.length > 0 && (
@@ -284,9 +300,11 @@ export const IndicTransliterate = ({
             top: `${top + offsetY}px`,
             position: "absolute",
             width: "auto",
+            ...(googleFont && { fontFamily: googleFont }),
           }}
           className={classes.ReactTransliterate}
           data-testid="rt-suggestions-list"
+          lang={lang}
         >
           {/*
            * convert to set and back to prevent duplicate list items
