@@ -19,6 +19,10 @@
   background-color: #fff;
 }
 
+.ReactTransliterate > li:hover {
+  background-color: #65c3d7 !important;
+}
+
 .Active {
   background-color: #65c3d7;
   color: #fff;

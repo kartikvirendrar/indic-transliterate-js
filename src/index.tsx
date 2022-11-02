@@ -258,13 +258,17 @@ export const IndicTransliterate = ({
     getDirectionAndFont(lang).then(([direction, googleFont, fallbackFont]) => {
       setDirection(direction);
       // import google font if not already imported
-      if (googleFont && !document.getElementById(`font-${googleFont}`)) {
-        const link = document.createElement("link");
-        link.id = `font-${googleFont}`;
-        link.href = `https://fonts.googleapis.com/css?family=${googleFont}`;
-        link.rel = "stylesheet";
-        document.head.appendChild(link);
+      if (googleFont) {
+        if (!document.getElementById(`font-${googleFont}`)) {
+          const link = document.createElement("link");
+          link.id = `font-${googleFont}`;
+          link.href = `https://fonts.googleapis.com/css?family=${googleFont}`;
+          link.rel = "stylesheet";
+          document.head.appendChild(link);
+        }
         setGoogleFont(`${googleFont}, ${fallbackFont ?? "sans-serif"}`);
+      } else {
+        setGoogleFont(null);
       }
     });
   }, [lang]);
