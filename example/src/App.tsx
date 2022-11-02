@@ -69,7 +69,7 @@ const App = () => {
         renderComponent={(props) => {
           const inputRef = props.ref;
 
-          delete props["ref"];
+          delete props.ref;
 
           return <Input fullWidth {...props} inputRef={inputRef} />;
         }}
