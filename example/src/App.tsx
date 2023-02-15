@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 
 // import component
 import { IndicTransliterate, getTransliterationLanguages } from "@ai4bharat/indic-transliterate";
-import "@ai4bharat/indic-transliterate/dist/index.css";
 
 // Material Ui input component
 import Input from "@material-ui/core/Input";
