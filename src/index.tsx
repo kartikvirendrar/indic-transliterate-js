@@ -2,7 +2,6 @@ import * as React from "react";
 import { useEffect, useRef, useState, useMemo } from "react";
 import { setCaretPosition, getInputSelection, isTouchEnabled } from "./util";
 import getCaretCoordinates from "textarea-caret";
-import classes from "./styles.module.css";
 import { IndicTransliterateProps } from "./interfaces/Props";
 import { Language } from "./types/Language";
 import { LangObject } from "./types/LangObject";
@@ -300,13 +299,22 @@ export const IndicTransliterate = ({
       {shouldRenderSuggestions && options.length > 0 && (
         <ul
           style={{
+            backgroundClip : "padding-box",
+            backgroundColor : "#fff",
+            border : "1px solid rgba(0, 0, 0, 0.15)",
+            boxShadow : "0 6px 12px rgba(0, 0, 0, 0.175)",
+            display: "block",
+            fontSize: "14px",
+            listStyle: "none",
+            padding: "1px",
+            textAlign: "left",
+            zIndex: 20000,
             left: `${left + offsetX}px`,
             top: `${top + offsetY}px`,
             position: "absolute",
             width: "auto",
             ...(googleFont && { fontFamily: googleFont }),
           }}
-          className={classes.ReactTransliterate}
           data-testid="rt-suggestions-list"
           lang={lang}
         >
@@ -316,8 +324,7 @@ export const IndicTransliterate = ({
            */}
           {Array.from(new Set(options)).map((item, index) => (
             <li
-              className={index === selection ? classes.Active : undefined}
-              style={index === selection ? activeItemStyles || {} : {}}
+              style={index === selection ? { cursor: "pointer",padding: "10px",minWidth: "100px",backgroundColor: "#65c3d7", color:"#fff"} : { cursor: "pointer",padding: "10px",minWidth: "100px",backgroundColor: "#fff"} }
               onMouseEnter={() => {
                 setSelection(index);
               }}
