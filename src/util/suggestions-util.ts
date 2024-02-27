@@ -1,5 +1,5 @@
 import { Language } from "../types/Language";
-import { BASE_URL } from "../constants/Urls";
+import { DHRUVA_URL } from "../constants/Urls";
 
 type Config = {
   numOptions?: number;
@@ -49,7 +49,7 @@ export const getTransliterateSuggestions = async (
   };
 
   try {
-    const res = await fetch(BASE_URL, {
+    const res = await fetch(DHRUVA_URL, {
       method: "post",
       body: JSON.stringify(body),
       mode: "cors",
