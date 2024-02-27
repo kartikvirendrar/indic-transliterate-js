@@ -58,11 +58,10 @@ export const getTransliterateSuggestions = async (
         Authorization:
           "uOQOvZAkdKQpaeZa5-K03k9SIXOtZFEIkdj995-lTz_bozcijCNgVye2jEGIRFQG",
       })
-    });
+    }).then((response) => response.json());
 
-    const result = await res.json();
-    console.log("library data", result);
-    const data = result["output"][0];
+    console.log("library data", res);
+    const data = res["output"][0];
     if (data && data.result.length > 0) {
       const found = showCurrentWordAsLastSuggestion
         ? [...data.target, word]
