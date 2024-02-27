@@ -60,13 +60,13 @@ export const getTransliterateSuggestions = async (
       })
     });
 
-    const data = await res.json();
-    console.log("library data", data);
-    console.log("lib data", data["output"]);
+    const result = await res.json();
+    console.log("library data", result);
+    const data = result["output"][0];
     if (data && data.result.length > 0) {
       const found = showCurrentWordAsLastSuggestion
-        ? [...data.result, word]
-        : data.result;
+        ? [...data.target, word]
+        : data.target;
       return found;
     } else {
       if (showCurrentWordAsLastSuggestion) {
