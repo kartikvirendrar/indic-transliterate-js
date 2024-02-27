@@ -21,22 +21,47 @@ export const getTransliterateSuggestions = async (
   // let myHeaders = new Headers();
   // myHeaders.append("Content-Type", "application/json");
 
-  const requestOptions = {
-    method: "GET",
+  if (word == '.' || word == '..') {
+    word = ' ' + word;
+  }
+  word = encodeURIComponent(word);
+
+  const body = {
+    input: [
+      {
+        source: word,
+      },
+    ],
+    config: {
+      serviceId: "ai4bharat/indicxlit--gpu-t4",
+      language: {
+        sourceLanguage: "en",
+        sourceScriptCode: "",
+        targetLanguage: lang,
+        targetScriptCode: ""
+      },
+      isSentence: false,
+      numSuggestions: 5,
+    },
+    controlConfig: {
+      dataTracking: true,
+    },
   };
 
   try {
-    const res = await fetch(
-      BASE_URL +
-        `tl/${lang}/${
-          word === "." || word === ".."
-            ? " " + word.replace(".", "%2E")
-            : encodeURIComponent(word).replace(".", "%2E")
-        }`,
-      requestOptions,
-    );
+    const res = await fetch(BASE_URL, {
+      method: "post",
+      body: JSON.stringify(body),
+      mode: "cors",
+      headers: new Headers({
+        "Content-Type": "application/json",
+        Authorization:
+          "uOQOvZAkdKQpaeZa5-K03k9SIXOtZFEIkdj995-lTz_bozcijCNgVye2jEGIRFQG",
+      })
+    });
+
     const data = await res.json();
-     console.log("library data", data);
+    console.log("library data", data);
     if (data && data.result.length > 0) {
       const found = showCurrentWordAsLastSuggestion
         ? [...data.result, word]
