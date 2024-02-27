@@ -61,6 +61,7 @@ export const getTransliterateSuggestions = async (
     }).then((response) => response.json());
 
     console.log("library data", res);
+    console.log("library data", res["output"][0].target);
     const data = res["output"][0];
     if (data && data.result.length > 0) {
       const found = showCurrentWordAsLastSuggestion
