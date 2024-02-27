@@ -47,8 +47,10 @@ export const getTransliterateSuggestions = async (
       dataTracking: true,
     },
   };
+  console.log("library data before try block");
 
   try {
+    console.log("library data in try block");
     const res = await fetch(DHRUVA_URL, {
       method: "post",
       body: JSON.stringify(body),
@@ -62,7 +64,7 @@ export const getTransliterateSuggestions = async (
 
     console.log("library data", res);
     const data = res["output"][0];
-    if (data && data.result.length > 0) {
+    if (data && data.target.length > 0) {
       const found = showCurrentWordAsLastSuggestion
         ? [...data.target, word]
         : data.target;
