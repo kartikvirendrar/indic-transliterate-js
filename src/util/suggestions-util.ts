@@ -57,7 +57,7 @@ export const getTransliterateSuggestions = async (
         "Content-Type": "application/json",
         Authorization:
           "uOQOvZAkdKQpaeZa5-K03k9SIXOtZFEIkdj995-lTz_bozcijCNgVye2jEGIRFQG",
-      })
+      }),
     }).then((response) => response.json());
 
     console.log("library data", res);
