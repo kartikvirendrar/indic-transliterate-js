@@ -72,7 +72,7 @@ export const IndicTransliterate = ({
     const currentString = value;
     // create a new string with the currently typed word
     // replaced with the word in transliterated language
-    console.log(options, index, options[index]);
+    console.log(index);
     const newValue =
       currentString.substring(0, matchStart) +
       options[index] +
