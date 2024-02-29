@@ -41,9 +41,11 @@ export const IndicTransliterate = ({
   insertCurrentSelectionOnBlur = true,
   showCurrentWordAsLastSuggestion = true,
   enabled = true,
+  options = [],
+  setOptions,
+  setSelected,
   ...rest
 }: IndicTransliterateProps): JSX.Element => {
-  const [options, setOptions] = useState<string[]>([]);
   const [left, setLeft] = useState(0);
   const [top, setTop] = useState(0);
   const [selection, setSelection] = useState<number>(0);
@@ -73,6 +75,7 @@ export const IndicTransliterate = ({
     // create a new string with the currently typed word
     // replaced with the word in transliterated language
     console.log(index);
+    setSelected(options[index]);
     const newValue =
       currentString.substring(0, matchStart) +
       options[index] +
@@ -330,9 +333,9 @@ export const IndicTransliterate = ({
                 setSelection(index);
               }}
               onClick={() => handleSelection(index)}
-              key={item}
+              key={decodeURIComponent(item)}
             >
-              {item}
+              {decodeURIComponent(item)}
             </li>
           ))}
         </ul>
