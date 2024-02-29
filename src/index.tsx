@@ -333,9 +333,9 @@ export const IndicTransliterate = ({
                 setSelection(index);
               }}
               onClick={() => handleSelection(index)}
-              key={decodeURIComponent(item)}
+              key={item}
             >
-              {decodeURIComponent(item)}
+              {item}
             </li>
           ))}
         </ul>
