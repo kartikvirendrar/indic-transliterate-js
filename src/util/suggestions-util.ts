@@ -21,15 +21,15 @@ export const getTransliterateSuggestions = async (
   // let myHeaders = new Headers();
   // myHeaders.append("Content-Type", "application/json");
 
-  if (word == '.' || word == '..') {
-    word = ' ' + word;
-  }
-  word = encodeURIComponent(word);
+  // if (word == '.' || word == '..') {
+  //   word = ' ' + word;
+  // }
+  // word = encodeURIComponent(word);
 
   const body = {
     input: [
       {
-        source: word,
+        source: word === "." || word === ".." ? " " + word.replace(".", "%2E") : encodeURIComponent(word).replace(".", "%2E"),
       },
     ],
     config: {
