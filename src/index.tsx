@@ -41,8 +41,6 @@ export const IndicTransliterate = ({
   insertCurrentSelectionOnBlur = true,
   showCurrentWordAsLastSuggestion = true,
   enabled = true,
-  setOptions,
-  setSelected,
   ...rest
 }: IndicTransliterateProps): JSX.Element => {
   const [left, setLeft] = useState(0);
@@ -54,7 +52,7 @@ export const IndicTransliterate = ({
   const [windowSize, setWindowSize] = useState({ width: 0, height: 0 });
   const [direction, setDirection] = useState("ltr");
   const [googleFont, setGoogleFont] = useState<string | null>(null);
-  const [options, setOptionss] = useState<string[]>([]);
+  const [options, setOptions] = useState<string[]>([]);
 
   const shouldRenderSuggestions = useMemo(
     () =>
@@ -68,7 +66,6 @@ export const IndicTransliterate = ({
     // reset the component
     setSelection(0);
     setOptions([]);
-    setOptionss([]);
   };
 
   const handleSelection = (index: number, triggerKey = " ") => {
@@ -76,7 +73,6 @@ export const IndicTransliterate = ({
     // create a new string with the currently typed word
     // replaced with the word in transliterated language
     console.log(index);
-    setSelected(options[index]);
     const newValue =
       currentString.substring(0, matchStart) +
       options[index] +
@@ -122,7 +118,6 @@ export const IndicTransliterate = ({
       lang,
     });
     setOptions(data ?? []);
-    setOptionss(data ?? []);
   };
 
   const getDirectionAndFont = async (lang: Language) => {

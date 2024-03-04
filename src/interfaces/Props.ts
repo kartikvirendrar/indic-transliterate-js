@@ -87,10 +87,6 @@ export interface IndicTransliterateProps
    */
   showCurrentWordAsLastSuggestion?: boolean;
 
-  setOptions?: (options: string[]) => void;
-
-  setSelected?: (text: string) => void;
-
   /**
    * Control whether suggestions should be shown
    * @type boolean
