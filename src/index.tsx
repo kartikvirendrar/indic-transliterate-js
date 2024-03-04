@@ -53,6 +53,8 @@ export const IndicTransliterate = ({
   const [direction, setDirection] = useState("ltr");
   const [googleFont, setGoogleFont] = useState<string | null>(null);
   const [options, setOptions] = useState<string[]>([]);
+  const [logJsonArray, setLogJsonArray] = useState([]);
+  const [numSpaces, setNumSpaces] = useState(0);
 
   const shouldRenderSuggestions = useMemo(
     () =>
@@ -72,12 +74,21 @@ export const IndicTransliterate = ({
     const currentString = value;
     // create a new string with the currently typed word
     // replaced with the word in transliterated language
-    console.log(index);
     const newValue =
       currentString.substring(0, matchStart) +
       options[index] +
       " " +
       currentString.substring(matchEnd + 1, currentString.length);
+
+    if(logJsonArray.length){
+      let lastLogJson = logJsonArray[logJsonArray.length-1];
+      let logJson = {
+        keystrokes: lastLogJson.keystrokes,
+        results: lastLogJson.results,
+        opted: options[index],
+        created_at: new Date().toISOString()};
+      setLogJsonArray([...logJsonArray, logJson]);
+    }
 
     // set the position of the caret (cursor) one character after the
     // the position of the new word
@@ -101,7 +112,7 @@ export const IndicTransliterate = ({
     return inputRef.current?.focus();
   };
 
-  const renderSuggestions = async (lastWord: string) => {
+  const renderSuggestions = async (lastWord: string, wholeText: string) => {
     if (!shouldRenderSuggestions) {
       return;
     }
@@ -118,6 +129,12 @@ export const IndicTransliterate = ({
       lang,
     });
     setOptions(data ?? []);
+    let logJson = {
+              keystrokes: wholeText,
+              results: data,
+              opted: "",
+              created_at: new Date().toISOString()}
+    setLogJsonArray([...logJsonArray, logJson]);
   };
 
   const getDirectionAndFont = async (lang: Language) => {
@@ -132,6 +149,12 @@ export const IndicTransliterate = ({
 
   const handleChange = (e: React.FormEvent<HTMLInputElement>) => {
     const value = e.currentTarget.value;
+
+    if (value.match(/ /g)?.length >= numSpaces+5){
+      setNumSpaces(numSpaces+5);
+      console.log(logJsonArray);
+      setLogJsonArray([]);
+    }
 
     // bubble up event to the parent component
     onChange && onChange(e);
@@ -167,8 +190,7 @@ export const IndicTransliterate = ({
     const currentWord = value.slice(indexOfLastSpace + 1, caret);
     if (currentWord && enabled) {
       // make an api call to fetch suggestions
-      renderSuggestions(currentWord);
-      console.log(value);
+      renderSuggestions(currentWord, value);
 
       const rect = input.getBoundingClientRect();
 
