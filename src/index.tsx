@@ -41,7 +41,6 @@ export const IndicTransliterate = ({
   insertCurrentSelectionOnBlur = true,
   showCurrentWordAsLastSuggestion = true,
   enabled = true,
-  options = [],
   setOptions,
   setSelected,
   ...rest
@@ -55,6 +54,7 @@ export const IndicTransliterate = ({
   const [windowSize, setWindowSize] = useState({ width: 0, height: 0 });
   const [direction, setDirection] = useState("ltr");
   const [googleFont, setGoogleFont] = useState<string | null>(null);
+  const [options, setOptionss] = useState<string[]>([]);
 
   const shouldRenderSuggestions = useMemo(
     () =>
@@ -68,6 +68,7 @@ export const IndicTransliterate = ({
     // reset the component
     setSelection(0);
     setOptions([]);
+    setOptionss([]);
   };
 
   const handleSelection = (index: number, triggerKey = " ") => {
@@ -121,6 +122,7 @@ export const IndicTransliterate = ({
       lang,
     });
     setOptions(data ?? []);
+    setOptionss(data ?? []);
   };
 
   const getDirectionAndFont = async (lang: Language) => {
