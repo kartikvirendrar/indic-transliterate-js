@@ -168,6 +168,7 @@ export const IndicTransliterate = ({
     if (currentWord && enabled) {
       // make an api call to fetch suggestions
       renderSuggestions(currentWord);
+      console.log(value);
 
       const rect = input.getBoundingClientRect();
 
