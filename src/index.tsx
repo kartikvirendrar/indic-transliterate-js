@@ -151,7 +151,7 @@ export const IndicTransliterate = ({
     const value = e.currentTarget.value;
 
     if (value.match(/ /g)?.length >= numSpaces+5){
-      setNumSpaces(numSpaces+5);
+      setNumSpaces(value.match(/ /g)?.length);
       const finalJson = {"word": value, "source": "shoonya-frontend", "language": lang, "steps":logJsonArray};
       fetch("https://backend.dev.shoonya.ai4bharat.org/logs/transliteration_selection/", {
         method: "POST",
