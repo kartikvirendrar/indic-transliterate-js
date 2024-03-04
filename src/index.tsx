@@ -80,6 +80,7 @@ export const IndicTransliterate = ({
       " " +
       currentString.substring(matchEnd + 1, currentString.length);
 
+    console.log(options[index]);
     if(logJsonArray.length){
       let lastLogJson = logJsonArray[logJsonArray.length-1];
       let logJson = {
