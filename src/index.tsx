@@ -80,7 +80,6 @@ export const IndicTransliterate = ({
       " " +
       currentString.substring(matchEnd + 1, currentString.length);
 
-    console.log(options[index]);
     if(logJsonArray.length){
       let lastLogJson = logJsonArray[logJsonArray.length-1];
       let logJson = {
@@ -153,7 +152,21 @@ export const IndicTransliterate = ({
 
     if (value.match(/ /g)?.length >= numSpaces+5){
       setNumSpaces(numSpaces+5);
-      console.log(logJsonArray);
+      const finalJson = {"word": value, "source": "shoonya-frontend", "language": lang, "steps":logJsonArray};
+      fetch("https://backend.dev.shoonya.ai4bharat.org/logs/transliteration_selection/", {
+        method: "POST",
+        body: JSON.stringify(finalJson),
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization":`JWT ${localStorage.getItem('shoonya_access_token')}`
+        },
+      })
+      .then(async (res) => {
+        if (!res.ok) {throw await res.json()};
+      })
+      .catch((err) => {
+        console.log("error", err);
+      });
       setLogJsonArray([]);
     }
 
