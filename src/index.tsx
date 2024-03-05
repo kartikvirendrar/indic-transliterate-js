@@ -55,6 +55,7 @@ export const IndicTransliterate = ({
   const [options, setOptions] = useState<string[]>([]);
   const [logJsonArray, setLogJsonArray] = useState([]);
   const [numSpaces, setNumSpaces] = useState(0);
+  const [parentUuid, setParentUuid] = useState(Math.random().toString(36).substr(2, 9));
 
   const shouldRenderSuggestions = useMemo(
     () =>
@@ -152,7 +153,7 @@ export const IndicTransliterate = ({
 
     if (value.match(/ /g)?.length >= numSpaces+5 && logJsonArray.length > 5){
       setNumSpaces(value.match(/ /g)?.length);
-      const finalJson = {"word": value, "source": "shoonya-frontend", "language": lang, "steps":logJsonArray};
+      const finalJson = {"uuid": Math.random().toString(36).substr(2, 9), "parent_uuid": parentUuid, "word": value, "source": "shoonya-frontend", "language": lang, "steps":logJsonArray};
       fetch("https://backend.dev.shoonya.ai4bharat.org/logs/transliteration_selection/", {
         method: "POST",
         body: JSON.stringify(finalJson),
