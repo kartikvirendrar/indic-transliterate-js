@@ -97,7 +97,7 @@ export const IndicTransliterate = ({
       setCaretPosition(
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         inputRef.current!,
-        matchStart + options[index].length
+        matchStart + options[index].length + 1
       );
     }, 1);
 
