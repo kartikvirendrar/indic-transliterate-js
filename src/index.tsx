@@ -58,6 +58,7 @@ export const IndicTransliterate = ({
   const [parentUuid, setParentUuid] = useState(Math.random().toString(36).substr(2, 9));
   const [uuid, setUuid] = useState(Math.random().toString(36).substr(2, 9));
   const [subStrLength, setSubStrLength] = useState(0);
+  const [restart, setRestart] = useState(true);
 
   const shouldRenderSuggestions = useMemo(
     () =>
@@ -136,8 +137,13 @@ export const IndicTransliterate = ({
               results: data,
               opted: "",
               created_at: new Date().toISOString()}
-    
-    setLogJsonArray([...logJsonArray, logJson]);
+
+    if(restart){
+      setRestart(false);
+      setLogJsonArray([logJson]);
+    }else{
+      setLogJsonArray([...logJsonArray, logJson]);
+    }
   };
 
   const getDirectionAndFont = async (lang: Language) => {
@@ -153,12 +159,18 @@ export const IndicTransliterate = ({
   const handleChange = (e: React.FormEvent<HTMLInputElement>) => {
     const value = e.currentTarget.value;
 
+    if(numSpaces == 0 || restart){
+      setSubStrLength(value.length-1);
+    } 
+
     if (numSpaces >= 5){
       const finalJson = {"uuid": uuid, "parent_uuid": parentUuid, "word": value, "source": localStorage.getItem('source') != undefined ? localStorage.getItem('source') : "node-module", "language": lang, "steps":logJsonArray};
-      setLogJsonArray(["-"]);
+      setLogJsonArray([]);
       setParentUuid(uuid);
       setUuid(Math.random().toString(36).substr(2, 9));
+      setSubStrLength(value.length-2);
       setNumSpaces(0);
+      setRestart(true);
       fetch("https://backend.dev.shoonya.ai4bharat.org/logs/transliteration_selection/", {
         method: "POST",
         body: JSON.stringify(finalJson),
@@ -174,10 +186,6 @@ export const IndicTransliterate = ({
         console.log("error", err);
       });
     }
-
-    if(numSpaces == 0){
-      setSubStrLength(value.length-1);
-    } 
 
     // bubble up event to the parent component
     onChange && onChange(e);
