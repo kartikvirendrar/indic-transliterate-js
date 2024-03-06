@@ -1,5 +1,5 @@
 import { Language } from "../types/Language";
-import { DHRUVA_URL } from "../constants/Urls";
+import { BASE_URL } from "../constants/Urls";
 
 type Config = {
   numOptions?: number;
@@ -21,50 +21,26 @@ export const getTransliterateSuggestions = async (
   // let myHeaders = new Headers();
   // myHeaders.append("Content-Type", "application/json");
 
-  // if (word == '.' || word == '..') {
-  //   word = ' ' + word;
-  // }
-  // word = encodeURIComponent(word);
-
-  const body = {
-    input: [
-      {
-        source: word === "." || word === ".." ? " " + word.replace(".", "%2E") : encodeURIComponent(word).replace(".", "%2E"),
-      },
-    ],
-    config: {
-      serviceId: "ai4bharat/indicxlit--gpu-t4",
-      language: {
-        sourceLanguage: "en",
-        sourceScriptCode: "",
-        targetLanguage: lang,
-        targetScriptCode: ""
-      },
-      isSentence: false,
-      numSuggestions: 5,
-    },
-    controlConfig: {
-      dataTracking: true,
-    },
+  const requestOptions = {
+    method: "GET",
   };
 
   try {
-    const res = await fetch(DHRUVA_URL, {
-      method: "post",
-      body: JSON.stringify(body),
-      mode: "cors",
-      headers: new Headers({
-        "Content-Type": "application/json",
-        Authorization:
-          "uOQOvZAkdKQpaeZa5-K03k9SIXOtZFEIkdj995-lTz_bozcijCNgVye2jEGIRFQG",
-      }),
-    }).then((response) => response.json());
-
-    const data = res["output"][0];
-    if (data && data.target.length > 0) {
+    const res = await fetch(
+      BASE_URL +
+        `tl/${lang}/${
+          word === "." || word === ".."
+            ? " " + word.replace(".", "%2E")
+            : encodeURIComponent(word).replace(".", "%2E")
+        }`,
+      requestOptions,
+    );
+    const data = await res.json();
+     console.log("library data", data);
+    if (data && data.result.length > 0) {
       const found = showCurrentWordAsLastSuggestion
-        ? [...data.target, word]
-        : data.target;
+        ? [...data.result, word]
+        : data.result;
       return found;
     } else {
       if (showCurrentWordAsLastSuggestion) {
