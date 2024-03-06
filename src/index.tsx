@@ -136,6 +136,7 @@ export const IndicTransliterate = ({
               results: data,
               opted: "",
               created_at: new Date().toISOString()}
+    
     setLogJsonArray([...logJsonArray, logJson]);
   };
 
@@ -152,13 +153,9 @@ export const IndicTransliterate = ({
   const handleChange = (e: React.FormEvent<HTMLInputElement>) => {
     const value = e.currentTarget.value;
 
-    if(numSpaces == 0){
-      setSubStrLength(value.length-1);
-    }
-
     if (numSpaces >= 5){
       const finalJson = {"uuid": uuid, "parent_uuid": parentUuid, "word": value, "source": localStorage.getItem('source') != undefined ? localStorage.getItem('source') : "node-module", "language": lang, "steps":logJsonArray};
-      setLogJsonArray([]);
+      setLogJsonArray(["-"]);
       setParentUuid(uuid);
       setUuid(Math.random().toString(36).substr(2, 9));
       setNumSpaces(0);
@@ -177,6 +174,10 @@ export const IndicTransliterate = ({
         console.log("error", err);
       });
     }
+
+    if(numSpaces == 0){
+      setSubStrLength(value.length-1);
+    } 
 
     // bubble up event to the parent component
     onChange && onChange(e);
