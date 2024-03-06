@@ -91,6 +91,7 @@ export const IndicTransliterate = ({
         opted: options[index],
         created_at: new Date().toISOString()};
       setLogJsonArray([...logJsonArray, logJson]);
+      setNumSpaces(numSpaces+1);
     }
 
     // set the position of the caret (cursor) one character after the
@@ -151,13 +152,16 @@ export const IndicTransliterate = ({
   const handleChange = (e: React.FormEvent<HTMLInputElement>) => {
     const value = e.currentTarget.value;
 
-    if(logJsonArray.length == 0){
-      setSubStrLength(value.length);
+    if(numSpaces == 0){
+      setSubStrLength(value.length-1);
     }
 
-    if (value.match(/ /g)?.length >= numSpaces+5 && logJsonArray.length > 5){
-      setNumSpaces(value.match(/ /g)?.length);
+    if (numSpaces >= 5){
       const finalJson = {"uuid": uuid, "parent_uuid": parentUuid, "word": value, "source": localStorage.getItem('source') != undefined ? localStorage.getItem('source') : "node-module", "language": lang, "steps":logJsonArray};
+      setLogJsonArray([]);
+      setParentUuid(uuid);
+      setUuid(Math.random().toString(36).substr(2, 9));
+      setNumSpaces(0);
       fetch("https://backend.dev.shoonya.ai4bharat.org/logs/transliteration_selection/", {
         method: "POST",
         body: JSON.stringify(finalJson),
@@ -172,10 +176,6 @@ export const IndicTransliterate = ({
       .catch((err) => {
         console.log("error", err);
       });
-      setParentUuid(uuid);
-      setUuid(Math.random().toString(36).substr(2, 9));
-      setLogJsonArray([]);
-      setSubStrLength(value.length);
     }
 
     // bubble up event to the parent component
