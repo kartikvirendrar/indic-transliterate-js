@@ -163,7 +163,7 @@ export const IndicTransliterate = ({
       if(value.length >= 4){
       setSubStrLength(value.length-4);}
       else{
-      setSubStrLength(value.length-1);}
+      setSubStrLength(0);}
     } 
 
     if (numSpaces >= 5){
@@ -228,7 +228,7 @@ export const IndicTransliterate = ({
       if(value.length >= 4){
       renderSuggestions(currentWord, value.substr(value.length-4, value.length));
       }else{
-      renderSuggestions(currentWord, value.substr(value.length-1, value.length));
+      renderSuggestions(currentWord, value.substr(0, value.length));
       }
     }else{
       renderSuggestions(currentWord, value.substr(subStrLength, value.length));
