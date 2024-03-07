@@ -161,9 +161,10 @@ export const IndicTransliterate = ({
 
     if(numSpaces == 0 || restart){
       if(value.length >= 4){
-      setSubStrLength(value.length-4);}
-      else{
-      setSubStrLength(0);}
+      setSubStrLength(value.length-4);
+      }else{
+      setSubStrLength(0);
+      }
     } 
 
     if (numSpaces >= 5){
