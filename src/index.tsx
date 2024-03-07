@@ -160,7 +160,10 @@ export const IndicTransliterate = ({
     const value = e.currentTarget.value;
 
     if(numSpaces == 0 || restart){
-      setSubStrLength(value.length-1);
+      if(value.length >= 4){
+      setSubStrLength(value.length-4);}
+      else{
+      setSubStrLength(value.length-1);}
     } 
 
     if (numSpaces >= 5){
@@ -221,7 +224,15 @@ export const IndicTransliterate = ({
     const currentWord = value.slice(indexOfLastSpace + 1, caret);
     if (currentWord && enabled) {
       // make an api call to fetch suggestions
+    if(numSpaces == 0 || restart){
+      if(value.length >= 4){
+      renderSuggestions(currentWord, value.substr(value.length-4, value.length));
+      }else{
+      renderSuggestions(currentWord, value.substr(value.length-1, value.length));
+      }
+    }else{
       renderSuggestions(currentWord, value.substr(subStrLength, value.length));
+    }
 
       const rect = input.getBoundingClientRect();
 
