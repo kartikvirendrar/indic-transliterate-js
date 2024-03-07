@@ -43,7 +43,6 @@ export const IndicTransliterate = ({
   enabled = true,
   ...rest
 }: IndicTransliterateProps): JSX.Element => {
-  const [options, setOptions] = useState<string[]>([]);
   const [left, setLeft] = useState(0);
   const [top, setTop] = useState(0);
   const [selection, setSelection] = useState<number>(0);
@@ -53,6 +52,13 @@ export const IndicTransliterate = ({
   const [windowSize, setWindowSize] = useState({ width: 0, height: 0 });
   const [direction, setDirection] = useState("ltr");
   const [googleFont, setGoogleFont] = useState<string | null>(null);
+  const [options, setOptions] = useState<string[]>([]);
+  const [logJsonArray, setLogJsonArray] = useState([]);
+  const [numSpaces, setNumSpaces] = useState(0);
+  const [parentUuid, setParentUuid] = useState(Math.random().toString(36).substr(2, 9));
+  const [uuid, setUuid] = useState(Math.random().toString(36).substr(2, 9));
+  const [subStrLength, setSubStrLength] = useState(0);
+  const [restart, setRestart] = useState(true);
 
   const shouldRenderSuggestions = useMemo(
     () =>
@@ -78,15 +84,24 @@ export const IndicTransliterate = ({
       " " +
       currentString.substring(matchEnd + 1, currentString.length);
 
+    if(logJsonArray.length){
+      let lastLogJson = logJsonArray[logJsonArray.length-1];
+      let logJson = {
+        keystrokes: lastLogJson.keystrokes,
+        results: lastLogJson.results,
+        opted: options[index],
+        created_at: new Date().toISOString()};
+      setLogJsonArray([...logJsonArray, logJson]);
+      setNumSpaces(numSpaces+1);
+    }
+
     // set the position of the caret (cursor) one character after the
     // the position of the new word
     setTimeout(() => {
       setCaretPosition(
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         inputRef.current!,
-        triggerKey === "Enter"
-          ? matchStart + options[index].length
-          : matchStart + options[index].length + 1,
+        matchStart + options[index].length + 1
       );
     }, 1);
 
@@ -100,7 +115,7 @@ export const IndicTransliterate = ({
     return inputRef.current?.focus();
   };
 
-  const renderSuggestions = async (lastWord: string) => {
+  const renderSuggestions = async (lastWord: string, wholeText: string) => {
     if (!shouldRenderSuggestions) {
       return;
     }
@@ -117,6 +132,18 @@ export const IndicTransliterate = ({
       lang,
     });
     setOptions(data ?? []);
+    let logJson = {
+              keystrokes: wholeText,
+              results: data,
+              opted: "",
+              created_at: new Date().toISOString()}
+
+    if(restart){
+      setRestart(false);
+      setLogJsonArray([logJson]);
+    }else{
+      setLogJsonArray([...logJsonArray, logJson]);
+    }
   };
 
   const getDirectionAndFont = async (lang: Language) => {
@@ -131,6 +158,37 @@ export const IndicTransliterate = ({
 
   const handleChange = (e: React.FormEvent<HTMLInputElement>) => {
     const value = e.currentTarget.value;
+
+    if(numSpaces == 0 || restart){
+      if(value.length >= 4){
+      setSubStrLength(value.length-4);
+      }else{
+      setSubStrLength(0);
+      }
+    } 
+
+    if (numSpaces >= 5){
+      const finalJson = {"uuid": uuid, "parent_uuid": parentUuid, "word": value, "source": localStorage.getItem('source') != undefined ? localStorage.getItem('source') : "node-module", "language": lang, "steps":logJsonArray};
+      setLogJsonArray([]);
+      setParentUuid(uuid);
+      setUuid(Math.random().toString(36).substr(2, 9));
+      setSubStrLength(value.length-2);
+      setNumSpaces(0);
+      setRestart(true);
+      fetch("https://backend.shoonya.ai4bharat.org/logs/transliteration_selection/", {
+        method: "POST",
+        body: JSON.stringify(finalJson),
+        headers: {
+          "Content-Type": "application/json"
+        },
+      })
+      .then(async (res) => {
+        if (!res.ok) {throw await res.json()};
+      })
+      .catch((err) => {
+        console.log("error", err);
+      });
+    }
 
     // bubble up event to the parent component
     onChange && onChange(e);
@@ -166,7 +224,15 @@ export const IndicTransliterate = ({
     const currentWord = value.slice(indexOfLastSpace + 1, caret);
     if (currentWord && enabled) {
       // make an api call to fetch suggestions
-      renderSuggestions(currentWord);
+    if(numSpaces == 0 || restart){
+      if(value.length >= 4){
+      renderSuggestions(currentWord, value.substr(value.length-4, value.length));
+      }else{
+      renderSuggestions(currentWord, value.substr(0, value.length));
+      }
+    }else{
+      renderSuggestions(currentWord, value.substr(subStrLength, value.length));
+    }
 
       const rect = input.getBoundingClientRect();
 
