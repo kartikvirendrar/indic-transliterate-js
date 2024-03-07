@@ -179,8 +179,7 @@ export const IndicTransliterate = ({
         method: "POST",
         body: JSON.stringify(finalJson),
         headers: {
-          "Content-Type": "application/json",
-          "Authorization":`JWT ${localStorage.getItem('shoonya_access_token')}`
+          "Content-Type": "application/json"
         },
       })
       .then(async (res) => {
