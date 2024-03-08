@@ -43,6 +43,7 @@ export const IndicTransliterate = ({
   enabled = true,
   ...rest
 }: IndicTransliterateProps): JSX.Element => {
+  
   const [left, setLeft] = useState(0);
   const [top, setTop] = useState(0);
   const [selection, setSelection] = useState<number>(0);
