@@ -175,7 +175,7 @@ export const IndicTransliterate = ({
       setSubStrLength(value.length-2);
       setNumSpaces(0);
       setRestart(true);
-      fetch("https://backend.dev.shoonya.ai4bharat.org/logs/transliteration_selection/", {
+      fetch("https://backend.shoonya.ai4bharat.org/logs/transliteration_selection/", {
         method: "POST",
         body: JSON.stringify(finalJson),
         headers: {
