@@ -43,6 +43,12 @@ export const IndicTransliterate = ({
   enabled = true,
   ...rest
 }: IndicTransliterateProps): JSX.Element => {
+  interface LogJson {
+    keystrokes: any;
+    results: any;
+    opted: any;
+    created_at: any;
+  }
   const [left, setLeft] = useState(0);
   const [top, setTop] = useState(0);
   const [selection, setSelection] = useState<number>(0);
@@ -53,7 +59,7 @@ export const IndicTransliterate = ({
   const [direction, setDirection] = useState("ltr");
   const [googleFont, setGoogleFont] = useState<string | null>(null);
   const [options, setOptions] = useState<string[]>([]);
-  const [logJsonArray, setLogJsonArray] = useState([]);
+  const [logJsonArray, setLogJsonArray] = useState<LogJson[]>([]);
   const [numSpaces, setNumSpaces] = useState(0);
   const [parentUuid, setParentUuid] = useState(Math.random().toString(36).substr(2, 9));
   const [uuid, setUuid] = useState(Math.random().toString(36).substr(2, 9));
@@ -74,7 +80,7 @@ export const IndicTransliterate = ({
     setOptions([]);
   };
 
-  const handleSelection = (index: number, triggerKey = " ") => {
+  const handleSelection = (index: number) => {
     const currentString = value;
     // create a new string with the currently typed word
     // replaced with the word in transliterated language
@@ -86,7 +92,7 @@ export const IndicTransliterate = ({
 
     if(logJsonArray.length){
       let lastLogJson = logJsonArray[logJsonArray.length-1];
-      let logJson = {
+      let logJson:LogJson = {
         keystrokes: lastLogJson.keystrokes,
         results: lastLogJson.results,
         opted: options[index],
@@ -132,7 +138,7 @@ export const IndicTransliterate = ({
       lang,
     });
     setOptions(data ?? []);
-    let logJson = {
+    let logJson:LogJson = {
               keystrokes: wholeText,
               results: data,
               opted: "",
@@ -262,7 +268,7 @@ export const IndicTransliterate = ({
     if (helperVisible) {
       if (triggerKeys.includes(event.key)) {
         event.preventDefault();
-        handleSelection(selection, event.key);
+        handleSelection(selection);
       } else {
         switch (event.key) {
           case KEY_ESCAPE:
