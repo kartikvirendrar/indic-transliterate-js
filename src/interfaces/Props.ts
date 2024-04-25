@@ -92,4 +92,10 @@ export interface IndicTransliterateProps
    * @type boolean
    */
   enabled?: boolean;
+
+  /**
+   * Control whether suggestions should be shown in horizontal direction
+   * @type boolean
+   */
+  horizontalView?: boolean;
 }

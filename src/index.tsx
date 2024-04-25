@@ -11,6 +11,8 @@ import { getTransliterationLanguages } from "./util/getTransliterationLanguages"
 
 const KEY_UP = "ArrowUp";
 const KEY_DOWN = "ArrowDown";
+const KEY_LEFT = "ArrowLeft";
+const KEY_RIGHT = "ArrowRight";
 const KEY_ESCAPE = "Escape";
 
 const OPTION_LIST_Y_OFFSET = 10;
@@ -41,6 +43,7 @@ export const IndicTransliterate = ({
   insertCurrentSelectionOnBlur = true,
   showCurrentWordAsLastSuggestion = true,
   enabled = true,
+  horizontalView = false,
   ...rest
 }: IndicTransliterateProps): JSX.Element => {
   interface LogJson {
@@ -283,6 +286,14 @@ export const IndicTransliterate = ({
             event.preventDefault();
             setSelection((selection + 1) % options.length);
             break;
+          case KEY_LEFT:
+            event.preventDefault();
+            setSelection((options.length + selection - 1) % options.length);
+            break;
+          case KEY_RIGHT:
+            event.preventDefault();
+            setSelection((selection + 1) % options.length);
+            break;
           default:
             onKeyDown && onKeyDown(event);
             break;
@@ -375,11 +386,11 @@ export const IndicTransliterate = ({
             backgroundColor : "#fff",
             border : "1px solid rgba(0, 0, 0, 0.15)",
             boxShadow : "0 6px 12px rgba(0, 0, 0, 0.175)",
-            display: "block",
+            display: horizontalView ? "flex" : "block",
             fontSize: "14px",
             listStyle: "none",
             padding: "1px",
-            textAlign: "left",
+            textAlign: "center",
             zIndex: 20000,
             left: `${left + offsetX}px`,
             top: `${top + offsetY}px`,
