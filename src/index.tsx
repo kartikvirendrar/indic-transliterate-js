@@ -51,6 +51,7 @@ export const IndicTransliterate = ({
     results: any;
     opted: any;
     created_at: any;
+    language: any;
   }
   const [left, setLeft] = useState(0);
   const [top, setTop] = useState(0);
@@ -64,7 +65,7 @@ export const IndicTransliterate = ({
   const [options, setOptions] = useState<string[]>([]);
   const [logJsonArray, setLogJsonArray] = useState<LogJson[]>([]);
   const [numSpaces, setNumSpaces] = useState(0);
-  const [parentUuid, setParentUuid] = useState(Math.random().toString(36).substr(2, 9));
+  const [parentUuid, setParentUuid] = useState("0");
   const [uuid, setUuid] = useState(Math.random().toString(36).substr(2, 9));
   const [subStrLength, setSubStrLength] = useState(0);
   const [restart, setRestart] = useState(true);
@@ -99,7 +100,8 @@ export const IndicTransliterate = ({
         keystrokes: lastLogJson.keystrokes,
         results: lastLogJson.results,
         opted: options[index],
-        created_at: new Date().toISOString()};
+        created_at: new Date().toISOString(),
+        language: lang};
       setLogJsonArray([...logJsonArray, logJson]);
       setNumSpaces(numSpaces+1);
     }
@@ -145,7 +147,8 @@ export const IndicTransliterate = ({
               keystrokes: wholeText,
               results: data,
               opted: "",
-              created_at: new Date().toISOString()}
+              created_at: new Date().toISOString(),
+              language: lang}
 
     if(restart){
       setRestart(false);
