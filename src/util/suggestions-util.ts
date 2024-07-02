@@ -28,7 +28,7 @@ export const getTransliterateSuggestions = async (
   try {
     const res = await fetch(
       customApiURL +
-        `tl/${lang}/${
+        `${lang}/${
           word === "." || word === ".."
             ? " " + word.replace(".", "%2E")
             : encodeURIComponent(word).replace(".", "%2E")
