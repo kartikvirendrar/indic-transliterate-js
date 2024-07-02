@@ -98,4 +98,6 @@ export interface IndicTransliterateProps
    * @type boolean
    */
   horizontalView?: boolean;
+
+  customApiURL?: string;
 }

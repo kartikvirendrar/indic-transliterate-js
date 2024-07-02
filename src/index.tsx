@@ -8,6 +8,7 @@ import { LangObject } from "./types/LangObject";
 import { TriggerKeys } from "./constants/TriggerKeys";
 import { getTransliterateSuggestions } from "./util/suggestions-util";
 import { getTransliterationLanguages } from "./util/getTransliterationLanguages";
+import { BASE_URL } from "./constants/Urls";
 
 const KEY_UP = "ArrowUp";
 const KEY_DOWN = "ArrowDown";
@@ -44,6 +45,7 @@ export const IndicTransliterate = ({
   showCurrentWordAsLastSuggestion = true,
   enabled = true,
   horizontalView = false,
+  customApiURL = BASE_URL,
   ...rest
 }: IndicTransliterateProps): JSX.Element => {
   interface LogJson {
@@ -141,6 +143,7 @@ export const IndicTransliterate = ({
       numOptions,
       showCurrentWordAsLastSuggestion,
       lang,
+      customApiURL,
     });
     setOptions(data ?? []);
     let logJson:LogJson = {

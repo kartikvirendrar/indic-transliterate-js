@@ -5,6 +5,7 @@ type Config = {
   numOptions?: number;
   showCurrentWordAsLastSuggestion?: boolean;
   lang?: Language;
+  customApiURL?: string,
 };
 
 export const getTransliterateSuggestions = async (
@@ -15,6 +16,7 @@ export const getTransliterateSuggestions = async (
     numOptions: 5,
     showCurrentWordAsLastSuggestion: true,
     lang: "hi",
+    customApiURL: BASE_URL,
   };
   // fetch suggestion from api
   // const url = `https://www.google.com/inputtools/request?ime=transliteration_en_${lang}&num=5&cp=0&cs=0&ie=utf-8&oe=utf-8&app=jsapi&text=${word}`;
