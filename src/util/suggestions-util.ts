@@ -38,7 +38,7 @@ export const getTransliterateSuggestions = async (
     let data = await res.json();
     console.log("library data", data);
     if(!customApiURL.includes("xlit-api")){
-      data.result = data.output.target;
+      data.result = data.output[0].target;
     }
     if (data && data.result.length > 0) {
       const found = showCurrentWordAsLastSuggestion
