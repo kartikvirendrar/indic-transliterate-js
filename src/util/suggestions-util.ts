@@ -1,22 +1,20 @@
 import { Language } from "../types/Language";
-import { BASE_URL } from "../constants/Urls";
 
 type Config = {
   numOptions?: number;
   showCurrentWordAsLastSuggestion?: boolean;
   lang?: Language;
-  customApiURL?: string,
 };
 
 export const getTransliterateSuggestions = async (
   word: string,
+  customApiURL: string,
   config?: Config,
 ): Promise<string[] | undefined> => {
   const { showCurrentWordAsLastSuggestion, lang } = config || {
     numOptions: 5,
     showCurrentWordAsLastSuggestion: true,
     lang: "hi",
-    customApiURL: BASE_URL,
   };
   // fetch suggestion from api
   // const url = `https://www.google.com/inputtools/request?ime=transliteration_en_${lang}&num=5&cp=0&cs=0&ie=utf-8&oe=utf-8&app=jsapi&text=${word}`;
@@ -29,7 +27,7 @@ export const getTransliterateSuggestions = async (
 
   try {
     const res = await fetch(
-      BASE_URL +
+      customApiURL +
         `tl/${lang}/${
           word === "." || word === ".."
             ? " " + word.replace(".", "%2E")

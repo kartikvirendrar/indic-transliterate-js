@@ -139,11 +139,10 @@ export const IndicTransliterate = ({
       ? maxOptions - 1
       : maxOptions;
 
-    const data = await getTransliterateSuggestions(lastWord, {
+    const data = await getTransliterateSuggestions(lastWord, customApiURL, {
       numOptions,
       showCurrentWordAsLastSuggestion,
       lang,
-      customApiURL,
     });
     setOptions(data ?? []);
     let logJson:LogJson = {
