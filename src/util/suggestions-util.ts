@@ -1,5 +1,4 @@
 import { Language } from "../types/Language";
-import { BASE_URL } from "../constants/Urls";
 
 type Config = {
   numOptions?: number;
@@ -9,6 +8,7 @@ type Config = {
 
 export const getTransliterateSuggestions = async (
   word: string,
+  customApiURL: string,
   config?: Config,
 ): Promise<string[] | undefined> => {
   const { showCurrentWordAsLastSuggestion, lang } = config || {
@@ -27,16 +27,19 @@ export const getTransliterateSuggestions = async (
 
   try {
     const res = await fetch(
-      BASE_URL +
-        `tl/${lang}/${
+      customApiURL +
+        `${lang}/${
           word === "." || word === ".."
             ? " " + word.replace(".", "%2E")
             : encodeURIComponent(word).replace(".", "%2E")
         }`,
       requestOptions,
     );
-    const data = await res.json();
-     console.log("library data", data);
+    let data = await res.json();
+    console.log("library data", data);
+    if(!customApiURL.includes("xlit-api")){
+      data.result = data.output[0].target;
+    }
     if (data && data.result.length > 0) {
       const found = showCurrentWordAsLastSuggestion
         ? [...data.result, word]
