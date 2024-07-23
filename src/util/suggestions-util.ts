@@ -11,7 +11,7 @@ type CacheEntry = {
   frequency: number;
 };
 
-const MAX_CACHE_SIZE = 1000;
+const MAX_CACHE_SIZE = 10000;
 const SAVE_THRESHOLD = 20;
 const CACHE_KEY = 'transliterateCache';
 
@@ -60,9 +60,9 @@ export const getTransliterateSuggestions = async (
     cache[lang] = {};
   }
 
-  if (cache[lang][word]) {
-    cache[lang][word].frequency += 1;
-    return cache[lang][word].suggestions;
+  if (cache[lang][word.toLowerCase()]) {
+    cache[lang][word.toLowerCase()].frequency += 1;
+    return cache[lang][word.toLowerCase()].suggestions;
   }
 
   const requestOptions = {
@@ -96,7 +96,7 @@ export const getTransliterateSuggestions = async (
         }
       }
 
-      cache[lang][word] = {
+      cache[lang][word.toLowerCase()] = {
         suggestions: found,
         frequency: 1,
       };
@@ -111,7 +111,7 @@ export const getTransliterateSuggestions = async (
     } else {
       if (showCurrentWordAsLastSuggestion) {
         const fallback = [word];
-        cache[lang][word] = {
+        cache[lang][word.toLowerCase()] = {
           suggestions: fallback,
           frequency: 1,
         };
