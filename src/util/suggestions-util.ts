@@ -111,10 +111,6 @@ export const getTransliterateSuggestions = async (
     } else {
       if (showCurrentWordAsLastSuggestion) {
         const fallback = [word];
-        cache[lang][word.toLowerCase()] = {
-          suggestions: fallback,
-          frequency: 1,
-        };
         return fallback;
       }
       return [];
