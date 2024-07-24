@@ -13,7 +13,7 @@ type CacheEntry = {
 
 const MAX_CACHE_SIZE = 10000;
 const SAVE_THRESHOLD = 20;
-const CACHE_KEY = 'transliterateCache';
+const CACHE_KEY = 'transliterationCache';
 
 const cache: Record<string, Record<string, CacheEntry>> = loadCacheFromLocalStorage();
 let newEntriesCount = 0;
