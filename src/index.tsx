@@ -46,6 +46,7 @@ export const IndicTransliterate = ({
   enabled = true,
   horizontalView = false,
   customApiURL = BASE_URL_TL,
+  apiKey = "",
   ...rest
 }: IndicTransliterateProps): JSX.Element => {
   interface LogJson {
@@ -139,7 +140,7 @@ export const IndicTransliterate = ({
     //   ? maxOptions - 1
     //   : maxOptions;
 
-    const data = await getTransliterateSuggestions(lastWord, customApiURL, {
+    const data = await getTransliterateSuggestions(lastWord, customApiURL, apiKey, {
       // numOptions,
       showCurrentWordAsLastSuggestion,
       lang,
