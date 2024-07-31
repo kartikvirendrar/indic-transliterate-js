@@ -67,9 +67,8 @@ export const getTransliterateSuggestions = async (
   }
 
   const requestOptions = {
-    method: "POST",
+    method: "GET",
     headers: {
-      "Content-Type": "application/json",
       "Authorization": apiKey,
     },
   };
