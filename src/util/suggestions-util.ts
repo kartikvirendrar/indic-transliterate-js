@@ -44,6 +44,7 @@ const getWordWithLowestFrequency = (dictionary: Record<string, CacheEntry>): str
 export const getTransliterateSuggestions = async (
   word: string,
   customApiURL: string,
+  apiKey: string,
   config?: Config,
 ): Promise<string[] | undefined> => {
   const {
@@ -66,7 +67,11 @@ export const getTransliterateSuggestions = async (
   }
 
   const requestOptions = {
-    method: "GET",
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": apiKey,
+    },
   };
 
   try {

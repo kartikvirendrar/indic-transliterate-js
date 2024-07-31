@@ -100,4 +100,6 @@ export interface IndicTransliterateProps
   horizontalView?: boolean;
 
   customApiURL?: string;
+
+  apiKey?: string;
 }
