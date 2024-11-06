@@ -15,10 +15,10 @@ jobs:
                 node-version: 16
             - name: Install base packages 🔧
               run: |
-                  npm ci
+                  npm ci --force
             - name: Install and Build 🔧
               run: |
-                  npm install
+                  npm install --force
                   npm run build
               working-directory: example
               env:
