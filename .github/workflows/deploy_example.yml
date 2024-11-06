@@ -13,9 +13,6 @@ jobs:
             - uses: actions/setup-node@v3
               with:
                 node-version: 16
-            - name: Install base packages 🔧
-              run: |
-                  npm ci --force
             - name: Install and Build 🔧
               run: |
                   npm install --force
