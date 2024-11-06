@@ -45,8 +45,8 @@
     "@types/react": "^17.0.20",
     "@types/react-dom": "^17.0.9",
     "@types/textarea-caret": "^3.0.0",
-    "@typescript-eslint/eslint-plugin": "^2.26.0",
-    "@typescript-eslint/parser": "^2.26.0",
+    "@typescript-eslint/eslint-plugin": "^8.13.0",
+    "@typescript-eslint/parser": "^8.13.0",
     "babel-eslint": "^10.0.3",
     "cross-env": "^7.0.2",
     "eslint": "^7.32.0",
@@ -67,13 +67,14 @@
     "prettier": "^2.0.4",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-scripts": "^4.0.3",
+    "react-scripts": "^5.0.1",
     "typescript": "^3.7.5"
   },
   "files": [
     "dist"
   ],
   "dependencies": {
-    "textarea-caret": "^3.1.0"
+    "textarea-caret": "^3.1.0",
+    "webpack": "^5.96.1"
   }
 }
