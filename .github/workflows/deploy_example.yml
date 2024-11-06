@@ -2,7 +2,7 @@ name: Build and Deploy
 on:
     push:
         branches:
-            - dev
+            - dev1
 jobs:
     build-and-deploy:
         concurrency: ci-${{ github.ref }}
