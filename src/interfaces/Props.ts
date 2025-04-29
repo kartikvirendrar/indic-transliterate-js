@@ -102,4 +102,8 @@ export interface IndicTransliterateProps
   customApiURL?: string;
 
   apiKey?: string;
+
+  enableASR?: boolean;
+
+  asrApiUrl?: string;
 }

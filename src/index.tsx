@@ -47,6 +47,8 @@ export const IndicTransliterate = ({
   horizontalView = false,
   customApiURL = BASE_URL_TL,
   apiKey = "",
+  enableASR = false,
+  asrApiUrl = "",
   ...rest
 }: IndicTransliterateProps): JSX.Element => {
   interface LogJson {
@@ -360,6 +362,104 @@ export const IndicTransliterate = ({
       }
     });
   }, [lang]);
+
+  const enableVoiceTyping = () => {  
+    const target = inputRef.current;
+    if (!target) return;
+  
+    const micBtn = document.createElement("button");
+    micBtn.innerHTML = "🎤";
+    micBtn.style.position = "absolute";
+    micBtn.style.padding = "5px";
+    micBtn.style.border = "none";
+    micBtn.style.cursor = "pointer";
+    micBtn.style.background = "#fff";
+    micBtn.style.borderRadius = "50%";
+    micBtn.style.boxShadow = "0 0 6px rgba(0,0,0,0.2)";
+    micBtn.style.top = "5px";
+    micBtn.style.left = "5px";
+  
+    const wrapper = document.createElement("div");
+    wrapper.style.position = "relative";
+    target.parentNode?.insertBefore(wrapper, target);
+    wrapper.appendChild(target);
+    wrapper.appendChild(micBtn);
+  
+    let mediaRecorder: MediaRecorder | null = null;
+    let audioChunks: BlobPart[] = [];
+    let isRecording = false;
+  
+    micBtn.onclick = async () => {
+      if (!navigator.mediaDevices) {
+        alert("Browser doesn't support audio recording.");
+        return;
+      }
+  
+      if (isRecording && mediaRecorder) {
+        mediaRecorder.stop();
+        isRecording = false;
+        micBtn.innerHTML = "🎤";
+      } else {
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        mediaRecorder = new MediaRecorder(stream);
+  
+        audioChunks = [];
+  
+        mediaRecorder.ondataavailable = (event: BlobEvent) => {
+          audioChunks.push(event.data);
+        };
+  
+        mediaRecorder.onstop = async () => {
+          const audioBlob = new Blob(audioChunks, { type: "audio/webm" });
+          const base64Audio = await blobToBase64Raw(audioBlob);
+  
+          const transcript = await transcribeWithDhruva(asrApiUrl, lang, base64Audio);
+  
+          const start = target.selectionStart ?? 0;
+          const end = target.selectionEnd ?? 0;
+          const text = target.value;
+          target.value = text.slice(0, start) + transcript + text.slice(end);
+        };
+  
+        mediaRecorder.start();
+        isRecording = true;
+        micBtn.innerHTML = "⏹️"; 
+      }
+    };
+  }
+  
+  async function blobToBase64Raw(blob: Blob): Promise<string> {
+    const arrayBuffer = await blob.arrayBuffer();
+    const uint8Array = new Uint8Array(arrayBuffer);
+    let binary = "";
+    for (let i = 0; i < uint8Array.length; i++) {
+      binary += String.fromCharCode(uint8Array[i]);
+    }
+    return btoa(binary);
+  }
+  
+  async function transcribeWithDhruva(apiURL: string, lang: string, base64Audio: string): Promise<string> {
+    try {
+      const response = await fetch(apiURL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ audioBase64: base64Audio, lang }),
+      });
+  
+      const result = await response.json();
+      return result.transcript || "";
+    } catch (err) {
+      console.error("Transcription API error:", err);
+      return "";
+    }
+  }
+
+  useEffect(() => {
+    if(enableASR){
+      enableVoiceTyping();
+    }
+  }, [enableASR]);
+  
 
   return (
     <div
