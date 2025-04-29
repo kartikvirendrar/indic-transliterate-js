@@ -18,7 +18,7 @@ jobs:
                   npm ci
             - name: Install and Build 🔧
               run: |
-                  npm install
+                  npm install --force
                   npm run build
               working-directory: example
               env:
