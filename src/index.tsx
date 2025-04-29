@@ -19,6 +19,14 @@ const KEY_ESCAPE = "Escape";
 const OPTION_LIST_Y_OFFSET = 10;
 const OPTION_LIST_MIN_WIDTH = 100;
 
+declare var MediaRecorder: {
+  prototype: MediaRecorder;
+  new(stream: MediaStream): MediaRecorder;
+};
+interface BlobEvent extends Event {
+  data: Blob;
+}
+
 export const IndicTransliterate = ({
   renderComponent = (props) => <input {...props} />,
   lang = "hi",
@@ -376,8 +384,8 @@ export const IndicTransliterate = ({
     micBtn.style.background = "#fff";
     micBtn.style.borderRadius = "50%";
     micBtn.style.boxShadow = "0 0 6px rgba(0,0,0,0.2)";
-    micBtn.style.top = "5px";
-    micBtn.style.left = "5px";
+    micBtn.style.bottom = "5px";
+    micBtn.style.right = "5px";
   
     const wrapper = document.createElement("div");
     wrapper.style.position = "relative";

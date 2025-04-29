@@ -14,10 +14,3 @@ declare module "*.less" {
   const content: { [className: string]: string };
   export default content;
 }
-declare var MediaRecorder: {
-  prototype: MediaRecorder;
-  new(stream: MediaStream): MediaRecorder;
-};
-interface BlobEvent extends Event {
-  data: Blob;
-}
