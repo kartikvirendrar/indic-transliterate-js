@@ -75,6 +75,7 @@
   ],
   "dependencies": {
     "@babel/core": "^7.16.0",
+    "@types/dom-mediacapture-record": "^1.0.22",
     "textarea-caret": "^3.1.0"
   }
 }
